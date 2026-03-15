@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:14.5
+    environment:
+      - POSTGRES_USER=polypharmacy
+      - POSTGRES_PASSWORD=optimization2024
+      - POSTGRES_DB=polypharmacy_db
+    volumes:
+      - polypharmacy-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  api:
+    build: .
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=polypharmacy
+      - DATABASE_PASSWORD=optimization2024
+      - DATABASE_NAME=polypharmacy_db
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+volumes:
+  polypharmacy-db:
